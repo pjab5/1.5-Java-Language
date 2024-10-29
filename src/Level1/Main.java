@@ -11,7 +11,7 @@ public class Main {
         try {
             config.load(new FileInputStream("src/config.properties"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         System.out.println(OrderDirectory.Order("src"));
         OrderDirectory.OrderTree(config.getProperty("directory"),config.getProperty("directory_txt")+ FileSystems.getDefault().getSeparator()+config.getProperty("name_txt"));

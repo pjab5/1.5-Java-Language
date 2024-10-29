@@ -19,7 +19,7 @@ public class OrderDirectory {
             OrderTreeRec(directory,filewriter);
             filewriter.close();
         }catch (IOException e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -54,7 +54,7 @@ public class OrderDirectory {
             out.close();
             fileOut.close();
         } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -66,10 +66,8 @@ public class OrderDirectory {
             object = in.readObject();
             in.close();
             fileIn.close();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
         return object;
     }
