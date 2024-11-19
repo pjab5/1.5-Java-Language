@@ -18,7 +18,7 @@ Clona aquest repositori: -> git clone Accedeix al directori del projecte: cd 1.5
 
 ▶️ Execució
 
-Executar els tests de la carpeta del directori test amb un compilador de Java.
+Executar els mains de les carpetes Level1 i Level2 amb un compilador de Java.
 
 🌐 Desplegament
 
