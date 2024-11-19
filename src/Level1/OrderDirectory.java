@@ -5,38 +5,51 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.Collator;
 import java.util.*;
 
 public class OrderDirectory {
 
-    public static List<String> Order(String directory){
-        return new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())));
+    public static List<String> Exercise1(String directory){
+        List<String> directories = new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())));
+        directories.sort(Collator.getInstance());
+        return directories;
     }
 
-    public static void OrderTree(String directory, String file){
+    public static void Exercise2(String directory) throws IOException {
+        System.out.println(directory+"(D)");
+        for (String i :new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())))){
+            if(!i.contains(".")){
+                Exercise2(directory + FileSystems.getDefault().getSeparator() + i);
+            }else{
+                System.out.println(i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime());
+            }
+        }
+    }
+
+    public static void Exercise3(String directory, String file){
         try{
             FileWriter filewriter = new FileWriter(file);
-            OrderTreeRec(directory,filewriter);
+            Exercise3_order(directory,filewriter);
             filewriter.close();
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public static void OrderTreeRec(String directory, FileWriter fileWriter) throws IOException {
+    public static void Exercise3_order(String directory, FileWriter fileWriter) throws IOException {
         fileWriter.write(directory+"(D)\n");
-        //System.out.println(directory+"(D)");
         for (String i :new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())))){
             if(!i.contains(".")){
-                OrderTreeRec(directory + FileSystems.getDefault().getSeparator() + i,fileWriter);
+                Exercise3_order(directory + FileSystems.getDefault().getSeparator() + i,fileWriter);
             }else{
                 fileWriter.write(i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime()+"\n");
-                //System.out.println(i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime());
             }
         }
     }
 
-    public static void printTxt(String path){
+    public static void Exercise4(String path){
+        System.out.println("\nFile contents:");
         try {
             for(String i:Files.readAllLines(Paths.get(path))){
                 System.out.println(i);
@@ -46,7 +59,7 @@ public class OrderDirectory {
         }
     }
 
-    public static void serialize(Object object, String file){
+    public static void Ex5_serialize(Object object, String file){
         try {
             FileOutputStream fileOut = new FileOutputStream(file);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -58,7 +71,7 @@ public class OrderDirectory {
         }
     }
 
-    public static Object deserialize(String file) {
+    public static Object Ex5_deserialize(String file) {
         Object object = new Object();
         try {
             FileInputStream fileIn = new FileInputStream(file);

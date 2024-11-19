@@ -7,16 +7,16 @@ import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
-        Properties config = new Properties();
+        System.out.println(OrderDirectory.Exercise1("src"));
         try {
-            config.load(new FileInputStream("src/config.properties"));
+            System.out.println("\nDirectory tree");
+            OrderDirectory.Exercise2("src");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
-        System.out.println(OrderDirectory.Order("src"));
-        OrderDirectory.OrderTree(config.getProperty("directory"),config.getProperty("directory_txt")+ FileSystems.getDefault().getSeparator()+config.getProperty("name_txt"));
-        OrderDirectory.printTxt(config.getProperty("directory_txt")+ FileSystems.getDefault().getSeparator()+config.getProperty("name_txt"));
-        OrderDirectory.serialize(new Persona(27,"Pau"), config.getProperty("directory")+FileSystems.getDefault().getSeparator()+"directories.ser");
-        System.out.println(OrderDirectory.deserialize(config.getProperty("directory")+FileSystems.getDefault().getSeparator()+"directories.ser"));
+        OrderDirectory.Exercise3("src","src"+ FileSystems.getDefault().getSeparator()+"Ex1_directories.txt");
+        OrderDirectory.Exercise4("src"+ FileSystems.getDefault().getSeparator()+"Ex1_directories.txt");
+        OrderDirectory.Ex5_serialize(new Persona(27,"Pau"), "src"+FileSystems.getDefault().getSeparator()+"directories.ser");
+        System.out.println(OrderDirectory.Ex5_deserialize("src"+FileSystems.getDefault().getSeparator()+"directories.ser"));
     }
 }
