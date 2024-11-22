@@ -18,7 +18,15 @@ Clona aquest repositori: -> git clone Accedeix al directori del projecte: cd 1.5
 
 ▶️ Execució
 
-Executar els mains de les carpetes Level1 i Level2 amb un compilador de Java.
+Per realitzar els exercicis del nivell 1 amb Windows cal situar-se a la carpeta Level1, usant l'Intèrpret d'ordres en Windows, i executar les comandes següents:
+  - javac -d . OrderDirectory.java
+  - javac -d . Persona.java
+  - javac -d . Main.java
+  - java Main.java
+Per realitzar l'exercici del nivell 2 amb Windows cal situar-se a la carpeta Level2, usant l'Intèrpret d'ordres en Windows, i executar les comandes següents:
+  - javac -d . OrderDirectory.java
+  - javac -d . Main.java
+  - java Main.java
 
 🌐 Desplegament
 
