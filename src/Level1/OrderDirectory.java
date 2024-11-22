@@ -11,18 +11,22 @@ import java.util.*;
 public class OrderDirectory {
 
     public static List<String> Exercise1(String directory){
-        List<String> directories = new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())));
-        directories.sort(Collator.getInstance());
-        return directories;
+        File dir = new File(directory);
+        if(dir.list()!=null){
+            List<String> directories = new ArrayList<>(List.of(dir.list()));
+            directories.sort(Collator.getInstance());
+            return directories;
+        }
+        return new ArrayList<>();
     }
 
-    public static void Exercise2(String directory) throws IOException {
-        System.out.println(directory+"(D)");
+    public static void Exercise2(String directory,String sep) throws IOException {
+        System.out.println(sep+directory.substring(directory.lastIndexOf("\\")+1)+"(D)");
         for (String i :new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())))){
             if(!i.contains(".")){
-                Exercise2(directory + FileSystems.getDefault().getSeparator() + i);
+                Exercise2(directory + FileSystems.getDefault().getSeparator() + i,sep+"\t");
             }else{
-                System.out.println(i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime());
+                System.out.println(sep+"\t"+i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime());
             }
         }
     }
@@ -30,20 +34,20 @@ public class OrderDirectory {
     public static void Exercise3(String directory, String file){
         try{
             FileWriter filewriter = new FileWriter(file);
-            Exercise3_order(directory,filewriter);
+            Exercise3_order(directory,filewriter,"");
             filewriter.close();
         }catch (IOException e){
             System.out.println(e.getMessage());
         }
     }
 
-    public static void Exercise3_order(String directory, FileWriter fileWriter) throws IOException {
-        fileWriter.write(directory+"(D)\n");
+    public static void Exercise3_order(String directory, FileWriter fileWriter, String sep) throws IOException {
+        fileWriter.write(sep+directory.substring(directory.lastIndexOf("\\")+1)+"(D)\n");
         for (String i :new ArrayList<>(List.of(Objects.requireNonNull(new File(directory).list())))){
             if(!i.contains(".")){
-                Exercise3_order(directory + FileSystems.getDefault().getSeparator() + i,fileWriter);
+                Exercise3_order(directory + FileSystems.getDefault().getSeparator() + i,fileWriter,sep+"\t");
             }else{
-                fileWriter.write(i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime()+"\n");
+                fileWriter.write(sep+"\t"+i + "(F) " + Files.readAttributes(Paths.get(directory + FileSystems.getDefault().getSeparator() + i) , BasicFileAttributes.class).lastModifiedTime()+"\n");
             }
         }
     }
